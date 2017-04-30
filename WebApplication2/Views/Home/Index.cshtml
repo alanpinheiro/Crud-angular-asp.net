@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+    <div class="container wrapper" ng-app="produtosApp" ng-controller="produtosCtrl">
+        <h1 class="text-center">AngularJS CRUD </h1>
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <div class="alert alert-default navbar-brand search-box">
+                    <button class="btn btn-primary"  ng-click="showme=true">Cadastrar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                </div>
+                <div class="alert alert-default input-group search-box">
+                    <span class="input-group-btn">
+                        <input type="text" class="form-control" placeholder="Procurar" ng-model="search_query">
+                    </span>
+                </div>
+            </div>
+        </nav>
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- Form para incluir (create) -->
+            <div ng-show="showme">
+
+                <!-- Form used to add new entries of employee in database -->
+                <form class="form-horizontal alert alert-warning" name="empList" id="empForm" ng-submit="Addalunos(empInfo);" >
+                    <h3 class="text-center">Inserir dados no DataBase</h3>
+                   
+                    <!-- campo nome -->
+                     <div class="form-group">
+                        <label for="Name">Nome:</label>
+                        <input type="text" name="emp_name" class="form-control" placeholder="Informe seu nome" ng-model="empInfo.nome" autofocus required />
+                    </div>
+                    <div class="form-group">
+                        <p class="text-danger" ng-show="empList.emp_name.$invalid && empList.emp_name.$dirty">Campo nome esta vazio!</p>
+                    </div>
+
+                    <!-- campo email -->
+                    <div class="form-group">
+                        <label for="Email">Email:</label>
+                        <input type="email" name="emp_email" class="form-control" placeholder="Informe seu email" ng-model="empInfo.email" autofocus required />
+                    </div>
+                    <div class="form-group">
+                        <p class="text-danger" ng-show="empList.emp_email.$invalid && empList.emp_email.$dirty">Email inválido!</p>
+                    </div>
+                    
+                    <!-- campo sexo -->
+                    <div class="form-group">
+                        <label for="Gender">Sexo:</label>
+                        <label for="" class="radio-inline gender">
+                            <input type="radio" name="emp_gender" value="masculino" ng-model="empInfo.sexo">Masculino
+                        </label>
+                        <label for="" class="radio-inline gender">
+                            <input type="radio" name="emp_gender" value="feminino" ng-model="empInfo.sexo">Feminino
+                        </label>
+                    </div>
+                  
+                    <!-- botao salvar -->
+                    <div class="form-group">
+                        <button class="btn btn-warning"  ng-disabled="empList.$invalid">Salvar</button>
+                    </div>
+
+
+                </form>
+
+            </div>
+
+            <!-- Editar -->
+            <div ng-show="showEdit">
+             
+                <form class="form-horizontal alert alert-warning" name="editList" id="editForm" ng-submit="UpdateInfo(currentUser)" >
+                    <h3 class="text-center">Update Employee Details</h3>
+                    <div class="form-group">
+                        <label for="Name">Nome</label>
+                        <input type="text" class="form-control" ng-model="currentUser.nome" value="{{currentUser.nome}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email </label>
+                        <input type="email" class="form-control" ng-model="currentUser.email" value="{{currentUser.email}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Gender">Sexo:</label>
+                        <label for="" class="radio-inline gender">
+                            <input type="radio" ng-model="currentUser.sexo" value="masculino">Masculino
+                        </label>
+                        <label for="" class="radio-inline gender">
+                            <input type="radio" name="gender" ng-model="currentUser.sexo" value="feminino">Female
+                        </label>
+                    </div>
+                   
+                    <div class="form-group">
+                        <button class="btn btn-warning"  ng-click="AlterarAluno(currentUser)">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Table to show employee detalis -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Sexo</th>
+                    <th>Ação</th>
+                   
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="x in alunos| filter:search_query">
+                    
+                    <td>{{x.Id}}</td>
+                    <td>{{x.nome}}</td>
+                    <td>{{x.email}}</td>
+                    <td>{{x.sexo}}</td>
+                    <td>
+                        <button class="btn btn-warning"  ng-click="Editar(x)" title="Edit"><span class="glyphicon glyphicon-edit"></span></button>
+                    
+                   
+                        <button class="btn btn-danger" ng-click="DeletaAluno(x)" title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
